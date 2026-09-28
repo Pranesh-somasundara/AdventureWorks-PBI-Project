@@ -1,0 +1,76 @@
+relationship 6b1d8423-7ecc-4d64-8ace-a0979de34d46
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Customer Lookup'.BirthDate
+	toColumn: LocalDateTable_84ee04b4-bc2b-430b-92ce-f09ff8144645.Date
+
+relationship AutoDetected_93fac837-6b22-4a3a-b1f2-d20dd5513418
+	fromColumn: 'Product Lookup'.ProductSubcategoryKey
+	toColumn: 'Product Subcategories Lookup'.ProductSubcategoryKey
+
+relationship AutoDetected_5ef7fe2d-302f-4cd3-a3e7-c46b90ad823c
+	fromColumn: 'Product Subcategories Lookup'.ProductCategoryKey
+	toColumn: 'Product Categories Lookup'.ProductCategoryKey
+
+relationship e17f0db2-4080-4190-af5d-ebc26663b272
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendar Lookup'.Date
+	toColumn: LocalDateTable_8aadad04-ecda-4f02-863d-1461e70b5c59.Date
+
+relationship 806508e2-e040-4d67-a2cf-69dbfe286d41
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendar Lookup'.'Start of Month'
+	toColumn: LocalDateTable_eafb1201-5822-46a6-a5a3-af0205429b81.Date
+
+relationship 6f6d603b-a866-4617-82bf-78dd0da03134
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendar Lookup'.'Start of Quarter'
+	toColumn: LocalDateTable_4466c543-8e7a-41b3-af5b-733410d190bf.Date
+
+relationship 7e8420ea-f603-4e17-baed-2fcf9428b2ff
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Rolling Calendar'.Date
+	toColumn: LocalDateTable_df9b4a19-9d98-4682-8243-b6717340f719.Date
+
+relationship 375b9082-b362-4cf8-96ba-955e8023577b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendar Lookup'.'Start of Year'
+	toColumn: LocalDateTable_812ebed6-d607-4bb3-a110-a1c9ad6ea76e.Date
+
+relationship AutoDetected_002f35dc-9272-49c5-a7bc-71e739c23ce6
+	fromColumn: 'Sales Data'.CustomerKey
+	toColumn: 'Customer Lookup'.CustomerKey
+
+relationship AutoDetected_3775d490-8e7e-4854-af5c-28150a6a9bac
+	fromColumn: 'Sales Data'.ProductKey
+	toColumn: 'Product Lookup'.ProductKey
+
+relationship 9bfc962d-deb3-ed97-8729-6237c9f68151
+	fromColumn: 'Sales Data'.TerritoryKey
+	toColumn: 'Territory Lookup'.SalesTerritoryKey
+
+relationship 24c62027-8436-3846-7c6b-3d85ec86071e
+	fromColumn: 'Sales Data'.OrderDate
+	toColumn: 'Calendar Lookup'.Date
+
+relationship 285082dc-7f3c-166c-0cc1-a86bcc5d1c94
+	isActive: false
+	fromColumn: 'Sales Data'.StockDate
+	toColumn: 'Calendar Lookup'.Date
+
+relationship AutoDetected_d65917ae-2693-4838-ade2-e93229ded913
+	fromColumn: 'Returns Data'.ProductKey
+	toColumn: 'Product Lookup'.ProductKey
+
+relationship f794ed63-81a6-8124-8914-f7914a2871bd
+	fromColumn: 'Returns Data'.ReturnDate
+	toColumn: 'Calendar Lookup'.Date
+
+relationship a1ce1a97-efd8-9589-bbcb-9062b6633ff6
+	fromColumn: 'Returns Data'.TerritoryKey
+	toColumn: 'Territory Lookup'.SalesTerritoryKey
+
+relationship 5eacd841-e096-4027-be15-afec75a0d7a2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendar Lookup'.'Start of Week'
+	toColumn: LocalDateTable_21d7e7b8-ae6c-4317-ab9a-d079e6ddf5d4.Date
+

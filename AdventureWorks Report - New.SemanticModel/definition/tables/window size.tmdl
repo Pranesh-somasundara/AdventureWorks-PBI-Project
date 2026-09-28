@@ -1,0 +1,26 @@
+table 'window size'
+	lineageTag: 226437d5-7018-431a-b916-0f17c10ad372
+
+	measure 'window size Value' = SELECTEDVALUE('window size'[window size], 0)
+		formatString: 0
+		lineageTag: 1a617f89-073d-44eb-8099-287df803158c
+
+	column 'window size'
+		formatString: 0
+		lineageTag: da76e381-9394-43d6-a5a0-aa6294aa8abd
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'window size' = calculated
+		mode: import
+		source = GENERATESERIES(1, 90, 5)
+
+	annotation PBI_Id = 894568f382f24eda979085816a326da2
+

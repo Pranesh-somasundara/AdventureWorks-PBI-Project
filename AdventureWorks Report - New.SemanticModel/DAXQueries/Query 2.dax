@@ -1,0 +1,4 @@
+EVALUATE
+    SUMMARIZECOLUMNS(
+        "Return rate(divide)", [Return rate(divide)]
+    )

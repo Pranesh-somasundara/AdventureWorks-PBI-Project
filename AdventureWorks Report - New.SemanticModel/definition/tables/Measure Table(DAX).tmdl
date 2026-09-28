@@ -1,0 +1,430 @@
+table 'Measure Table(DAX)'
+	lineageTag: f75fc9fc-af4b-49ea-8c6e-fa20dfb6e28f
+
+	measure 'Net Orders' =
+			
+			[Quantity Sold] - [Quantity Returned]
+		formatString: #,0.0
+		lineageTag: 2f8d0b37-ecb1-4116-8a6e-5634a16d9316
+
+		changedProperty = IsHidden
+
+	measure 'Quantity Sold' =
+			
+			SUM(
+			    'Sales Data'[OrderQuantity]
+			)
+		formatString: 0
+		lineageTag: 366cc368-ed9b-4335-984e-3164500a24f3
+
+	measure 'Quantity Returned' =
+			
+			SUM(
+			    'Returns Data'[ReturnQuantity]
+			)
+		formatString: 0
+		lineageTag: d2603ceb-b226-4e71-9943-d4a2c91fef50
+
+	measure 'Average Retail Price' =
+			
+			AVERAGE(
+			    'Product Lookup'[ProductPrice]
+			)
+		formatString: "₹"\ #,0.00;#,0.00\ -"₹";"₹"\ #,0.00
+		lineageTag: 14cba861-02d3-4d4e-b37d-292c8231cab2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Total returns' =
+			
+			COUNT('Returns Data'[ReturnQuantity])
+		formatString: 0
+		lineageTag: 5214494e-40e3-48c3-91c2-5e45e2921fc9
+
+	measure 'Total Orders' =
+			
+			DISTINCTCOUNT(
+			    'Sales Data'[OrderNumber]
+			)
+		formatString: 0
+		lineageTag: 77614bfa-3ed1-4a5e-b104-0475c9043053
+
+	measure 'Total customer' =
+			
+			DISTINCTCOUNT(
+			    'Sales Data'[CustomerKey]
+			)
+		formatString: 0
+		lineageTag: 339f5a28-1bf6-479d-9dcc-5435d1fd3012
+
+	measure 'Return rate' =
+			
+			[Quantity Returned] / [Quantity Sold]
+		lineageTag: e9c91324-bdde-4679-bb9e-70395e75fcdf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Return rate(divide)' =
+			
+			DIVIDE(
+			    [Quantity Returned],[Quantity Sold],"No Sales"
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2d69e71f-9575-47a8-8516-4b1db695a54b
+
+	measure 'Total cost' = ```
+			
+			SUMX(
+			    'Sales Data',
+			    'Sales Data'[OrderQuantity] *
+			    RELATED(
+			        'Product Lookup'[ProductCost]
+			    )
+			)
+			
+			```
+		formatString: "₹"\ #,0.00;#,0.00\ -"₹";"₹"\ #,0.00
+		lineageTag: 5bda9aee-77f5-4f6e-a294-9c2e367169ee
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Total Revenue' = ```
+			
+			SUMX(
+			    'Sales Data',
+			    'Sales Data'[OrderQuantity] * 
+			    RELATED(
+			        'Product Lookup'[ProductPrice]
+			    )
+			)
+			```
+		formatString: "₹"\ #,0.00;#,0.00\ -"₹";"₹"\ #,0.00
+		lineageTag: d36e1b4e-dc5a-4090-978a-29e3ce150889
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Total Profit' =
+			
+			[Total Revenue] - [Total cost]
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 32f7496c-4c71-42f9-aeee-50dd25feef60
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Bulk orders' = ```
+			
+			CALCULATE(
+			    [Total Orders], 
+			    'Sales Data'[OrderQuantity] > 1
+			)
+			```
+		formatString: #,0
+		lineageTag: 6444b5d5-d4d3-43a8-af57-fb6d177ed0ad
+
+	measure 'Weekend Orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    'Calendar Lookup'[Weekend] = "Weekend"
+			)
+		formatString: 0
+		lineageTag: 7657aeae-5308-4400-b786-d35099d1e92d
+
+	measure 'Bike returns' =
+			
+			CALCULATE(
+			    [Quantity Returned],
+			    'Product Categories Lookup'[CategoryName] = "Bikes"
+			    )
+		formatString: #,0
+		lineageTag: b5e24c4c-0112-4784-a4c9-1045d313e1b5
+
+	measure 'Bike Sales' =
+			
+			CALCULATE(
+			    [Quantity Sold],
+			    'Product Categories Lookup'[CategoryName] = "Bikes"
+			)
+		formatString: 0
+		lineageTag: d49917f0-9103-44d3-9861-cdd9c93ff782
+
+	measure 'Bike Return Rate' =
+			
+			CALCULATE(
+			    [Return rate(divide)],
+			    'Product Categories Lookup'[CategoryName] = "Bikes"
+			)
+		formatString: #,0.00
+		lineageTag: f50baecf-a50c-4281-96e1-367eda9e332e
+
+	measure 'Bike Return Rate (return Rate/ Bike Sales)' = ```
+			
+			DIVIDE( 
+			    [Return rate(divide)],
+			    [Bike Sales]
+			)
+			```
+		lineageTag: 21f93335-ad26-436b-92bb-a59396f8da14
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'All orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    ALL('Sales Data')
+			)
+		formatString: 0
+		lineageTag: c698e32d-f206-45d3-b31a-41cda5ca8124
+
+	measure 'total orders(all selected)' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    ALLSELECTED('Sales Data')
+			)
+		formatString: 0
+		lineageTag: 424a01a8-71fb-4391-ac00-698745938c03
+
+	measure '% of selected' =
+			
+			DIVIDE(
+			    [total orders(all selected)],
+			    [All orders],
+			    "No Sales"
+			)
+		lineageTag: 587d2325-8c4f-4e55-bec2-dad6013fc803
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% of all orders' =
+			
+			DIVIDE(
+			    [Total Orders],
+			    [All orders]
+			)
+		lineageTag: a2f4fabe-53af-4fc1-bc48-94ecdae3c743
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Overall average price' =
+			
+			CALCULATE(
+			    [Average Retail Price],
+			    ALL(
+			        'Product Lookup'
+			    )
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 9be2a835-4613-430d-8f4c-295429975e48
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'All returns' =
+			
+			CALCULATE(
+			    [Total returns],
+			    ALL(
+			        'Returns Data'
+			    )
+			)
+		formatString: 0
+		lineageTag: 774ccf13-1152-4b27-8ffa-edd41acd88f2
+
+	measure '% of All returns' =
+			
+			DIVIDE(
+			    [Total returns],
+			    [All returns]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3c35ece6-9bc9-43ff-a239-f05b7652883f
+
+	measure 'All returns(remove filter)' =
+			
+			CALCULATE(
+			    [Total returns],
+			    REMOVEFILTERS( 'Returns Data')
+			)
+		formatString: 0
+		lineageTag: 67bef21d-cfeb-4e51-9b3d-12599c37fb2f
+
+	measure 'High Ticker Order' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    FILTER(
+			        'Product Lookup',
+			        'Product Lookup'[ProductPrice] > [Overall average price]
+			    )
+			)
+		formatString: 0
+		lineageTag: 8f46cb2b-6bbb-40df-b209-35507b3e77cf
+
+	measure 'dynamic title' = ```
+			
+			var _multipleyear = 
+			CONCATENATEX(
+			    VALUES('Calendar Lookup'[Year]),
+			    'Calendar Lookup'[Year],
+			    ", "
+			) // -> concatenate if multiple years selected from slicer
+			var _result =
+			if( 
+			    ISFILTERED('Calendar Lookup'[Year]), 
+			    "Total Sales for Year : " & SELECTEDVALUE('Calendar Lookup'[Year], _multipleyear),
+			    "Sales over Year"
+			)
+			
+			RETURN
+			_result
+			
+			```
+		lineageTag: 2bc5eade-98b6-4706-9cf0-9138056d6a7b
+
+	measure quantity(self) =
+			
+			SUMX(
+			    RELATEDTABLE('Sales Data'),
+			    'Sales Data'[OrderQuantity]
+			)
+		formatString: 0
+		lineageTag: 459958bd-d7d2-44f0-b4f6-b4b0f416cfbc
+
+	measure numberOfPdts =
+			
+			COUNTROWS(RELATEDTABLE('Sales Data'))
+		formatString: 0
+		lineageTag: df16454d-ff5c-405a-baf5-02f154614baa
+
+	measure 'customer with sales' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT('Customer Lookup'[CustomerKey]),
+			    CROSSFILTER('Customer Lookup'[CustomerKey],
+			    'Sales Data'[CustomerKey],
+			    Both)
+			)
+		formatString: 0
+		lineageTag: b9152519-10e0-48ca-adcc-f2ed59a7d058
+
+	measure 'Test Sales Rows' =
+			
+			COUNTROWS('Sales Data')
+		formatString: 0
+		lineageTag: b5b92435-9ea7-4051-a1a9-0f3633813e86
+
+	measure 'average product sale' =
+			
+			AVERAGEX(
+			    all('Product Lookup'[ProductName]),
+			    [Total Revenue]
+			
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 7f9e12e3-4026-49f9-8e9e-2d04be76de23
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Product above average sales' =
+			
+			IF(
+			    ISINSCOPE('Product Lookup'[ProductName]),
+			    IF(
+			        [Total Revenue] > [average product sale],
+			        1,
+			        0
+			    )
+			)
+		formatString: 0
+		lineageTag: 71333c36-c1cf-4040-9435-a0f0cf2e8e60
+
+	measure 'Products with Zero Sales' =
+			
+			COUNTROWS(
+			    FILTER(
+			        'Product Lookup',
+			        ISEMPTY(RELATEDTABLE('Sales Data'))
+			    )
+			)
+		formatString: 0
+		lineageTag: 44f2efb9-a2b0-497c-b17c-ba767411458c
+
+	measure 'total orders(all except category name)' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    REMOVEFILTERS('Product Subcategories Lookup'))
+		formatString: 0
+		lineageTag: 6c6b6c16-5396-4be7-9300-8c6ff9621019
+
+	measure 'total order(allexcept year)' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    ALLEXCEPT('Calendar Lookup', 'Calendar Lookup'[Year]))
+		formatString: 0
+		lineageTag: b7628128-2572-40ec-8989-7b571e13aeb7
+
+	measure 'pdt sales %' =
+			
+			DIVIDE(
+			    [Total Orders],
+			    CALCULATE(
+			        [Total Orders],
+			        all('Product Categories Lookup'[CategoryName])
+			    )
+			)
+		lineageTag: 3d9ace13-9a3f-4218-9030-40cef229d2cd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pdt Above 10%' =
+			
+			IF(
+			    [pdt sales %]  > 0.10,
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: 01eb73e7-6b1c-4644-9a12-9d562b75ade6
+
+	measure 'ranked pdt' = ```
+			
+			RANK(
+			    DENSE,
+			    ALLSELECTED('Product Lookup'[ProductName]),
+			    ORDERBY([Total Revenue], DESC),
+			    
+			)
+			```
+		formatString: 0
+		lineageTag: 1a9778b8-fd4a-4df1-b2da-d4158d073719
+
+	measure 'TOP 10 customer based on sales' = ```
+			
+			TOPN(
+			    10,
+			    VALUES('Customer Lookup'[Full Name(CC)]),
+			    [Total Revenue],
+			    DESC)
+			
+			```
+		lineageTag: 3f181b0a-f0e5-479c-9b47-5e8c37d3278a
+
+	column Value
+		lineageTag: a3527215-2bf4-489a-9b44-f0a8408bb058
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measure Table(DAX)' = calculated
+		mode: import
+		source =
+				
+				{""}
+
+	annotation PBI_Id = 9b65c6e2570e49bd923ba24208f7b3fc
+

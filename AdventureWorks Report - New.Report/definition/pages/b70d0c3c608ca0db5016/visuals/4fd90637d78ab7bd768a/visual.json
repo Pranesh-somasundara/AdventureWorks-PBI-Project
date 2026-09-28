@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4fd90637d78ab7bd768a",
+  "position": {
+    "x": 56.804733727810657,
+    "y": 525.44378698224853,
+    "z": 5000,
+    "height": 149.64705882352942,
+    "width": 196.70588235294119,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Product Lookup"
+                    }
+                  },
+                  "Property": "SKU Type"
+                }
+              },
+              "queryRef": "Product Lookup.SKU Type",
+              "nativeQueryRef": "SKU Type"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Measure Table(DAX)"
+                    }
+                  },
+                  "Property": "quantity(self)"
+                }
+              },
+              "queryRef": "Measure Table(DAX).Number of Sales",
+              "nativeQueryRef": "quantity(self)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Measure Table(DAX)"
+                  }
+                },
+                "Property": "quantity(self)"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

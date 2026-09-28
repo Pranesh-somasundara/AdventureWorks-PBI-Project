@@ -1,0 +1,44 @@
+table 'dummy Table'
+	lineageTag: 582c84ec-d65f-4e68-a879-cbc5f96bd380
+
+	measure count(simple) =
+			
+			count('dummy Table'[entry])
+		formatString: 0
+		lineageTag: f31bc63f-12ad-4ca0-a616-2ccb5cfef30d
+
+	measure count(countrows) =
+			
+			COUNTROWS(
+			    'dummy Table')
+		formatString: 0
+		lineageTag: 62f568d1-babb-4cd9-9055-a0376c61c84c
+
+	measure count(countA) =
+			
+			COUNTA('dummy Table'[entry])
+		formatString: 0
+		lineageTag: 8b6caa49-9f3d-4ebf-9fe6-aca504561fc2
+
+	column entry
+		dataType: int64
+		formatString: 0
+		lineageTag: 46b53b7d-3fcd-4b5a-914f-f3e6ef61230e
+		summarizeBy: sum
+		sourceColumn: entry
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dummy Table' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSK1YlWMsIgwYQJmDRFCJiBSXOEgKUlhDIGU3AyFgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [entry = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"entry", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

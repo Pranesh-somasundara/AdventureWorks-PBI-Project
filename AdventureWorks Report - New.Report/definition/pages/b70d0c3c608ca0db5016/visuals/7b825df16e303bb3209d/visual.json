@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "7b825df16e303bb3209d",
+  "position": {
+    "x": 605.320197044335,
+    "y": 525.45155993431854,
+    "z": 7001,
+    "height": 91.428571428571431,
+    "width": 263.77668308702795
+  },
+  "visual": {
+    "visualType": "card",
+    "autoSelectVisualType": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dummy2"
+                    }
+                  },
+                  "Property": "Rolling Three months revenue"
+                }
+              },
+              "queryRef": "dummy2.Rolling Three months revenue",
+              "nativeQueryRef": "Rolling Three months revenue"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

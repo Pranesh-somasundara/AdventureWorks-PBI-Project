@@ -1,0 +1,12 @@
+EVALUATE
+
+	var _pos = LEFT("Pranesh", 1)
+	var _pos1 = right("Pranesh", 3)
+	var _pos2 = mid("Pranesh", 3,LEN("Pranesh") - 3 )
+	var _len = len("Pranesh")
+RETURN
+ROW("p", _pos,
+"p1", _pos1,
+"p2", _pos2,
+"l", _len
+)
