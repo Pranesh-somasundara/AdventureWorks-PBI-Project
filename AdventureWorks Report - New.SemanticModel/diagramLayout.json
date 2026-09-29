@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 498.35182422983473,
         "y": 0
       },
       "nodes": [
@@ -108,7 +108,7 @@
           "nodeIndex": "Sales Data",
           "nodeLineageTag": "5f9df79d-f90b-4557-aa24-2f462e7bc1a7",
           "size": {
-            "height": 272,
+            "height": 359.17524622096244,
             "width": 234
           },
           "zIndex": 11

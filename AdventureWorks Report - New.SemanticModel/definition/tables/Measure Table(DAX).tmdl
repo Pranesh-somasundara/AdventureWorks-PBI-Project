@@ -106,7 +106,7 @@ table 'Measure Table(DAX)'
 	measure 'Total Profit' =
 			
 			[Total Revenue] - [Total cost]
-		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		formatString: "₹"\ #,0;#,0\ -"₹";"₹"\ #,0
 		lineageTag: 32f7496c-4c71-42f9-aeee-50dd25feef60
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
@@ -411,6 +411,78 @@ table 'Measure Table(DAX)'
 			
 			```
 		lineageTag: 3f181b0a-f0e5-479c-9b47-5e8c37d3278a
+
+	measure Revenue_Aus =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    KEEPFILTERS(
+			        'Territory Lookup'[Country] = "Australia"
+			    )
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 83f50558-b92a-4400-903e-78ea4de31fa4
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Average revenue per customer' =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    [Total customer]
+			    )
+		formatString: "₹"\ #,0;#,0\ -"₹";"₹"\ #,0
+		lineageTag: 5efb54d7-7e61-46cf-8bd1-05ad29976450
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'YTD Revenue' =
+			
+			TOTALYTD(
+			    [Total Revenue],
+			    'Calendar Lookup'[Date]
+			)
+		formatString: "₹"\ #,0;#,0\ -"₹";"₹"\ #,0
+		lineageTag: 24febf77-8314-4ef2-bb8a-31eea04aa438
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Previous month revenue' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    DATEADD(
+			        'Calendar Lookup'[Date],
+			        -1,
+			        MONTH)
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: bf44c4b2-e182-4279-b6f6-9849edd049aa
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Revenue target' =
+			
+			[Previous month revenue] * 1.1
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 264559c4-6bb6-4455-98f5-af4b653659dd
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure '10-day rolling revenue' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    DATESINPERIOD(
+			        'Calendar Lookup'[Date],
+			        MAX('Calendar Lookup'[Date]),
+			        -10,
+			        DAY)
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: a3b600c2-17b3-4e6a-9951-4d30559fb009
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
 
 	column Value
 		lineageTag: a3527215-2bf4-489a-9b44-f0a8408bb058
