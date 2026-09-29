@@ -484,6 +484,75 @@ table 'Measure Table(DAX)'
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
 
+	measure 'Previous month return' =
+			
+			CALCULATE(
+			    [Total returns],
+			    DATEADD(
+			        'Calendar Lookup'[Date],
+			        -1,
+			        MONTH)
+			)
+		formatString: 0
+		lineageTag: e1f8b555-3ef5-4f54-899c-0790e1b3af06
+
+	measure 'Previous month orders' =
+			
+			CALCULATE(
+			    [Total Orders],
+			    DATEADD(
+			        'Calendar Lookup'[Date],
+			        -1,
+			        MONTH)
+			)
+		formatString: 0
+		lineageTag: 82fa78af-f1f1-4487-9fab-7082abd46535
+
+	measure 'Previous month profit' =
+			
+			CALCULATE(
+			    [Total Profit],
+			    DATEADD(
+			        'Calendar Lookup'[Date],
+			        -1,
+			        MONTH)
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 2931e875-065f-4bac-93b4-1b1453704ae8
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Order target' =
+			
+			[Previous month orders] * 1.1
+		lineageTag: d2e6dd64-60f3-4bce-a162-6ddeeb104871
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit target' =
+			
+			[Previous month profit] * 1.1
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: 525cd0bf-183c-4740-a909-cb79ce0abd99
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure '90-days rolling profit' =
+			
+			CALCULATE(
+			    [Total Profit],
+			    DATESINPERIOD(
+			        'Calendar Lookup'[Date],
+			        MAX('Calendar Lookup'[Date]),
+			        -90,
+			        DAY
+			    )
+			)
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: e3096fe9-beff-4c36-8628-7c39e77c8b0d
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
 	column Value
 		lineageTag: a3527215-2bf4-489a-9b44-f0a8408bb058
 		summarizeBy: none
