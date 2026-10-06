@@ -16,7 +16,7 @@ queryGroup 'Transform File from Sales Data\Helper Queries'
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["Customer Lookup","Product Lookup","Product Subcategories Lookup","Product Categories Lookup","Calendar Lookup","Rolling Calendar","Sales Data","Territory Lookup","Sample File","Parameter1","Transform Sample File","Transform File","Returns Data","Measure Table","dummy Table","dummy2"]
+annotation PBI_QueryOrder = ["Customer Lookup","Product Lookup","Product Subcategories Lookup","Product Categories Lookup","Calendar Lookup","Rolling Calendar","Sales Data","Territory Lookup","Sample File","Parameter1","Transform Sample File","Transform File","Returns Data","Measure Table"]
 
 annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
 
@@ -39,10 +39,6 @@ ref table 'Returns Data'
 ref table LocalDateTable_21d7e7b8-ae6c-4317-ab9a-d079e6ddf5d4
 ref table 'Measure Table'
 ref table 'Measure Table(DAX)'
-ref table 'dummy Table'
-ref table dummy2
-ref table 'window size'
-ref table 'fields parameter'
 
 ref cultureInfo en-US
 
