@@ -39,6 +39,7 @@ ref table 'Returns Data'
 ref table LocalDateTable_21d7e7b8-ae6c-4317-ab9a-d079e6ddf5d4
 ref table 'Measure Table'
 ref table 'Measure Table(DAX)'
+ref table 'dynamic selector Parameter'
 
 ref cultureInfo en-US
 

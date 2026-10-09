@@ -391,5 +391,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "89cf053ef8567ae0e3ed",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Measure Table(DAX)"
+              }
+            },
+            "Property": "Total customer"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
